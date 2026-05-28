@@ -160,17 +160,26 @@ h1, h2, h3 {
 /* HK-сайт · усиленная CTA — крупная, яркая, заметная.
    Используется в hero и в download-карточках. */
 .btn-xl {
-  padding: 16px 32px;
-  font-size: 16px;
+  padding: 18px 38px;
+  font-size: 18px;
+  font-weight: 700;
   letter-spacing: 0.5px;
   border-radius: 12px;
   box-shadow: 0 0 32px rgba(245, 158, 11, 0.5),
               0 0 80px rgba(245, 158, 11, 0.18);
 }
+.btn-xl .btn-arrow {
+  display: inline-block;
+  margin-left: 8px;
+  transition: transform 0.18s ease;
+}
 .btn-primary.btn-xl:hover {
   box-shadow: 0 0 40px rgba(245, 158, 11, 0.7),
               0 0 100px rgba(245, 158, 11, 0.25);
   transform: translateY(-2px);
+}
+.btn-primary.btn-xl:hover .btn-arrow {
+  transform: translateY(2px);
 }
 .btn[aria-disabled="true"] {
   opacity: 0.75; cursor: not-allowed; pointer-events: none;
