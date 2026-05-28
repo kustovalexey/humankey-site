@@ -22,9 +22,9 @@ site/
 ## Что сделать перед первой публикацией
 
 Открой в редакторе и поправь под себя:
-- [ ] **`privacy.html`** — реквизиты ИП (ФИО, ОГРНИП), реальный email
-- [ ] **`terms.html`** — то же
-- [ ] **`index.html`** — `feedback@humankey.app` → ваш реальный почтовый ящик
+- [x] **`privacy.html`** — реквизиты ИП (ФИО, ОГРНИП), реальный email
+- [x] **`terms.html`** — то же
+- [x] **`index.html`** — `humankey.team@yandex.ru` (29.04.2026)
 - [ ] **`index.html`** — `og:url` указать на реальный домен после покупки
 
 ## Вариант А: GitHub Pages (бесплатно, 5 минут)
@@ -83,7 +83,7 @@ https://USERNAME.github.io/REPO-NAME/
 
 ---
 
-## Подключение собственного домена `humankey.app`
+## Подключение собственного домена `humankey.tech`
 
 После того как сайт живёт на github.io субдомене:
 
@@ -108,13 +108,13 @@ CNAME www     USERNAME.github.io
 
 ### 3. На GitHub: репо → Settings → Pages → Custom domain
 
-Впиши `humankey.app` (без https://), Save.
+Впиши `humankey.tech` (без https://), Save.
 
 ### 4. Включи HTTPS
 
 Через 15-30 минут (после выпуска SSL-сертификата от Let's Encrypt) появится галочка **Enforce HTTPS** — поставь её.
 
-Готово. Сайт по `https://humankey.app`.
+Готово. Сайт по `https://humankey.tech`.
 
 ---
 

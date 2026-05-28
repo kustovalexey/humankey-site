@@ -5,14 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HumanKey — рефлексия через Генные Ключи и Дизайн Человека</title>
 <meta name="description" content="Приложение для рефлексии и работы с подсознанием. 64 метафорические карты на основе И-Цзин, рейв-карта Дизайна Человека, дневник инсайтов. Оффлайн, ничего не уходит в сеть.">
+<meta name="theme-color" content="#0A0614">
 
 <meta property="og:title" content="HumanKey — метафорические карты">
-<meta property="og:description" content="64 метафорические карты + рейв-карта + дневник. Всё оффлайн.">
+<meta property="og:description" content="64 метафорические карты + рейв-карта + дневник. Всё оффлайн. Запуск июнь 2026.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://humankey.app">
-<meta property="og:image" content="https://humankey.app/og-image.png">
+<meta property="og:url" content="https://humankey.tech">
+<meta property="og:image" content="https://humankey.tech/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="HumanKey">
+<meta property="og:locale" content="ru_RU">
 
-<link rel="icon" type="image/png" href="favicon-32.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HumanKey — метафорические карты">
+<meta name="twitter:description" content="64 метафорические карты + рейв-карта + дневник. Всё оффлайн. Запуск июнь 2026.">
+<meta name="twitter:image" content="https://humankey.tech/og-image.png">
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -27,8 +39,11 @@
     <nav class="nav-links">
       <a href="#features">Возможности</a>
       <a href="#how">Как работает</a>
-      <a href="#download">Скачать</a>
-      <a href="privacy.html">Приватность</a>
+      <a href="#faq">Вопросы</a>
+      <a href="#download" class="nav-cta">Скачать</a>
+      <a href="https://vk.com/humankey" class="vk-link" target="_blank" rel="noopener" aria-label="HumanKey ВКонтакте" title="Сообщество ВКонтакте">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.785 16.241s.288-.032.435-.193c.135-.148.131-.426.131-.426s-.019-1.299.578-1.491c.589-.19 1.345 1.262 2.146 1.821.605.423 1.065.33 1.065.33l2.14-.03s1.119-.069.588-.954c-.043-.072-.308-.654-1.587-1.85-1.34-1.25-1.16-1.048.453-3.218.982-1.323 1.376-2.13 1.253-2.474-.117-.328-.842-.241-.842-.241l-2.41.015s-.179-.024-.311.055c-.13.078-.213.26-.213.26s-.382 1.024-.892 1.894c-1.073 1.836-1.502 1.933-1.677 1.819-.408-.265-.306-1.067-.306-1.636 0-1.78.27-2.522-.524-2.717-.264-.065-.458-.108-1.132-.115-.865-.009-1.597.003-2.011.207-.276.135-.488.437-.359.454.16.022.523.099.715.363.249.341.24 1.107.24 1.107s.143 2.103-.334 2.365c-.327.18-.776-.187-1.733-1.853-.49-.852-.86-1.795-.86-1.795s-.071-.176-.198-.27c-.155-.114-.371-.15-.371-.15l-2.29.015s-.343.01-.469.16c-.112.134-.009.41-.009.41s1.793 4.196 3.823 6.31c1.863 1.941 3.978 1.813 3.978 1.813z"/></svg>
+      </a>
     </nav>
   </div>
 </header>
@@ -44,7 +59,7 @@
         Только вы, карта и вопрос.
       </p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#download">Скачать для Windows</a>
+        <a class="btn btn-primary btn-xl" href="#download">Скачать</a>
         <a class="btn btn-ghost" href="#how">Как это работает</a>
       </div>
       <div class="hero-meta">
@@ -52,7 +67,7 @@
         <span class="dot">·</span>
         <span>Всё локально</span>
         <span class="dot">·</span>
-        <span>Версия 0.1.0</span>
+        <span class="launch-badge">Запуск июнь 2026</span>
       </div>
     </div>
     <div class="hero-visual" aria-hidden="true">
@@ -106,6 +121,7 @@
     </div>
   </section>
 
+
   <section id="how" class="how">
     <h2>Как работать</h2>
     <ol class="how-steps">
@@ -150,20 +166,21 @@
 
   <section id="download" class="download">
     <h2>Скачать</h2>
+    <p class="section-sub">Запуск намечен на <strong>июнь 2026</strong>. Подпишитесь, чтобы узнать первыми.</p>
     <div class="download-grid">
       <div class="download-card">
         <div class="os-icon">▣</div>
         <h3>Windows</h3>
         <p>Десктопное приложение. Windows 10 и выше, 64-бит.</p>
-        <a class="btn btn-primary" href="#" aria-disabled="true">Microsoft Store — скоро</a>
-        <p class="small">Пока — по прямой ссылке через наш Telegram-канал.</p>
+        <a class="btn btn-primary btn-xl" href="#" aria-disabled="true">Запуск июнь 2026</a>
+        <p class="small">Бета-сборки сейчас раздаём в Telegram-канале по запросу.</p>
       </div>
       <div class="download-card">
         <div class="os-icon">▤</div>
         <h3>Android</h3>
-        <p>В разработке. Google Play и RuStore — ожидайте.</p>
-        <a class="btn btn-ghost" href="#" aria-disabled="true">Скоро</a>
-        <p class="small">Подпишитесь, чтобы узнать первыми.</p>
+        <p>Google Play и RuStore. Минимальная версия Android 8.</p>
+        <a class="btn btn-primary btn-xl" href="#" aria-disabled="true">Запуск июнь 2026</a>
+        <p class="small">Подпишитесь на <a href="https://vk.com/humankey" target="_blank" rel="noopener">ВК-сообщество</a>, чтобы узнать первыми.</p>
       </div>
     </div>
   </section>
@@ -177,6 +194,53 @@
       <li><strong>Ваш контент — ваш.</strong> Можно экспортировать и импортировать расшифровки.</li>
     </ul>
   </section>
+
+  <section id="faq" class="faq">
+    <h2>Вопросы</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Что такое Дизайн Человека? Это эзотерика?</summary>
+        <p>Это синтез западной астрологии, китайской И-Цзин, индийских чакр и
+        Каббалы. Мы относимся к Дизайну как к языку рефлексии и метафор, а не
+        к точной науке. В приложении нет предсказаний — есть карты-зеркала,
+        чтобы лучше услышать себя.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Что значит «карта для рефлексии»?</summary>
+        <p>Вы формулируете вопрос или ситуацию. Приложение вытягивает один из
+        64 Ключей — это не ответ, а оптика. В трёх уровнях (Тень — Дар —
+        Сидхи) описана динамика темы, которую полезно у себя заметить.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Нужно ли знать систему, чтобы пользоваться приложением?</summary>
+        <p>Нет. Каждый ключ, центр и канал в приложении сопровождается
+        обычным русским объяснением. База знаний открыта по тапу из любого
+        места: тыкаете на термин — открывается статья.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Когда запуск?</summary>
+        <p>Июнь 2026. Сейчас идёт открытое бета-тестирование на Windows и
+        Android, активная разработка визуала и контента 64 ключей.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Сколько будет стоить?</summary>
+        <p>Базовые функции (карта дня, рейв-карта, дневник) бесплатные навсегда.
+        Расширенные практики — по подписке или единовременной покупкой
+        («Навсегда»). Точные цены объявим ближе к запуску.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Будет ли iOS-версия?</summary>
+        <p>Пока не в ближайших планах — собираем фокус-группу на Windows и
+        Android. iOS появится позже, после первых тысяч пользователей.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Где хранятся мои данные?</summary>
+        <p>Только локально на вашем устройстве. Никакого облака, никакой
+        синхронизации без вашего ведома. Подробнее — в
+        <a href="privacy.html">политике конфиденциальности</a>.</p>
+      </details>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -186,6 +250,7 @@
       <span>HumanKey</span>
     </div>
     <div class="footer-links">
+      <a href="https://vk.com/humankey" target="_blank" rel="noopener">ВКонтакте</a>
       <a href="privacy.html">Политика конфиденциальности</a>
       <a href="terms.html">Пользовательское соглашение</a>
       <a href="mailto:humankey.team@yandex.ru">Связаться</a>

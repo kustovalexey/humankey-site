@@ -61,14 +61,35 @@ h1, h2, h3 {
   font-size: 22px;
   text-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
 }
-.nav-links { display: flex; gap: 28px; }
+.nav-links { display: flex; gap: 22px; align-items: center; }
 .nav-links a {
   color: var(--text-muted);
   font-size: 14px;
   font-weight: 500;
 }
 .nav-links a:hover { color: var(--text); }
-@media (max-width: 720px) { .nav-links { display: none; } }
+.nav-links .nav-cta {
+  color: var(--amber);
+  font-weight: 600;
+}
+.nav-links .nav-cta:hover { color: var(--amber-light); }
+.vk-link {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: rgba(245, 158, 11, 0.05);
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
+}
+.vk-link:hover {
+  color: var(--amber);
+  border-color: var(--amber);
+  background: rgba(245, 158, 11, 0.12);
+}
+@media (max-width: 720px) {
+  .nav-links a:not(.vk-link):not(.nav-cta) { display: none; }
+}
 
 /* ------------------- HERO ------------------- */
 .hero {
@@ -136,8 +157,23 @@ h1, h2, h3 {
   border-color: var(--border);
 }
 .btn-ghost:hover { border-color: var(--amber); color: var(--amber-light); }
+/* HK-сайт · усиленная CTA — крупная, яркая, заметная.
+   Используется в hero и в download-карточках. */
+.btn-xl {
+  padding: 16px 32px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  box-shadow: 0 0 32px rgba(245, 158, 11, 0.5),
+              0 0 80px rgba(245, 158, 11, 0.18);
+}
+.btn-primary.btn-xl:hover {
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.7),
+              0 0 100px rgba(245, 158, 11, 0.25);
+  transform: translateY(-2px);
+}
 .btn[aria-disabled="true"] {
-  opacity: 0.55; cursor: not-allowed; pointer-events: none;
+  opacity: 0.75; cursor: not-allowed; pointer-events: none;
 }
 .hero-meta {
   color: var(--text-dim);
@@ -145,6 +181,15 @@ h1, h2, h3 {
   display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
 }
 .dot { color: var(--text-dim); }
+.launch-badge {
+  color: var(--amber-light);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
 
 /* Hero visual — simplified wheel */
 .hero-visual {
@@ -338,6 +383,59 @@ footer {
 .footer-links a { color: var(--text-muted); }
 .footer-links a:hover { color: var(--amber); }
 .footer-copy { color: var(--text-dim); }
+
+/* Section subtitle (под h2) */
+.section-sub {
+  max-width: 1120px; margin: -18px auto 30px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+.section-sub strong { color: var(--amber-light); font-weight: 600; }
+.section-sub a { color: var(--amber); }
+
+/* ------------------- FAQ ------------------- */
+.faq-list {
+  max-width: 900px; margin: 0 auto;
+  display: flex; flex-direction: column;
+  gap: 10px;
+}
+.faq-item {
+  background: var(--surface);
+  border: 1px solid rgba(124, 92, 255, 0.15);
+  border-radius: 12px;
+  padding: 0;
+  transition: border-color 0.2s;
+}
+.faq-item[open] { border-color: var(--border); }
+.faq-item summary {
+  cursor: pointer;
+  padding: 18px 22px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  list-style: none;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  color: var(--amber);
+  font-size: 22px; line-height: 1;
+  transition: transform 0.2s;
+  flex: none;
+}
+.faq-item[open] summary::after { content: '−'; }
+.faq-item summary:hover { color: var(--amber-light); }
+.faq-item > p,
+.faq-item > div {
+  padding: 0 22px 18px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.faq-item p a { color: var(--amber); }
 
 /* Legal pages */
 .legal {
