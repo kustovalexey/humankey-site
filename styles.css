@@ -337,6 +337,19 @@ section h2 {
   padding: 28px;
   text-align: center;
 }
+/* Блок бейджей магазинов: RuStore сейчас, место под Google Play / App Store.
+   Колонка с отступами; на узких экранах кнопки растягиваются на всю ширину. */
+.store-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 6px 0 10px;
+}
+@media (max-width: 520px) {
+  .store-badges { flex-direction: column; }
+  .store-badges .btn { width: 100%; }
+}
 .os-icon {
   font-size: 42px;
   color: var(--amber);
