@@ -61,6 +61,7 @@ h1, h2, h3 {
   font-size: 22px;
   text-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
 }
+img.brand-mark { object-fit: cover; border-radius: 6px; box-shadow: 0 0 12px rgba(245, 158, 11, 0.35); }
 .nav-links { display: flex; gap: 22px; align-items: center; }
 .nav-links a {
   color: var(--text-muted);
