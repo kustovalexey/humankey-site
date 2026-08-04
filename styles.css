@@ -540,17 +540,3 @@ footer {
 .kb-list a { display: block; padding: 10px 14px; background: var(--surface); border: 1px solid rgba(245,158,11,0.12); border-radius: 10px; color: var(--text); font-size: 14px; transition: border-color .18s, transform .18s; }
 .kb-list a:hover { border-color: var(--amber); color: var(--amber-light); transform: translateX(2px); }
 .kb-foot { max-width: 780px; margin: 40px auto 0; padding: 24px; border-top: 1px solid var(--border); text-align: center; color: var(--text-dim); font-size: 13px; }
-
-/* Секция-приглашение (спокойный блок под hero). */
-.invite {
-  max-width: 760px; margin: 0 auto; text-align: center;
-  padding: 56px 24px;
-}
-.invite h2 {
-  font-size: clamp(24px, 4vw, 36px); font-weight: 300;
-  margin: 0 0 18px; letter-spacing: -0.3px;
-}
-.invite p {
-  color: var(--text-muted); font-size: 18px; line-height: 1.7;
-  max-width: 620px; margin: 0 auto;
-}
