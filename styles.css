@@ -515,3 +515,42 @@ footer {
 .legal p { color: var(--text-muted); }
 .legal ul { color: var(--text-muted); padding-left: 22px; }
 .legal a { color: var(--amber); }
+
+/* ------------------- KNOWLEDGE BASE (kb/) ------------------- */
+.kb-index, .kb-article { max-width: 780px; margin: 0 auto; padding-top: 88px; }
+.kb-crumbs { font-size: 13px; color: var(--text-dim); margin-bottom: 18px; }
+.kb-crumbs a { color: var(--text-muted); }
+.kb-crumbs a:hover { color: var(--amber); }
+.kb-index h1, .kb-article h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 300; margin: 0 0 12px; }
+.kb-sub { color: var(--amber-light); font-size: 15px; margin: 0 0 22px; }
+.kb-body p { color: var(--text); margin: 0 0 16px; line-height: 1.7; }
+.kb-tips, .kb-related { margin-top: 28px; }
+.kb-tips h2, .kb-related h2 { font-size: 18px; font-weight: 600; margin: 0 0 12px; color: var(--amber-light); }
+.kb-tips ul { padding-left: 20px; }
+.kb-tips li { color: var(--text-muted); margin-bottom: 8px; line-height: 1.6; }
+.kb-related ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.kb-related li { background: var(--surface); border: 1px solid rgba(124,92,255,0.18); border-radius: 12px; padding: 12px 14px; }
+.kb-rel-cat { display: block; color: var(--text-dim); font-size: 12px; margin-top: 2px; }
+.kb-cta { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); text-align: center; }
+.kb-cta p { color: var(--text-muted); margin: 0 0 16px; }
+.kb-cat { margin-bottom: 34px; }
+.kb-cat h2 { font-size: 22px; font-weight: 300; margin: 0 0 6px; }
+.kb-cat-intro { color: var(--text-muted); font-size: 14px; margin: 0 0 14px; }
+.kb-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+.kb-list a { display: block; padding: 10px 14px; background: var(--surface); border: 1px solid rgba(245,158,11,0.12); border-radius: 10px; color: var(--text); font-size: 14px; transition: border-color .18s, transform .18s; }
+.kb-list a:hover { border-color: var(--amber); color: var(--amber-light); transform: translateX(2px); }
+.kb-foot { max-width: 780px; margin: 40px auto 0; padding: 24px; border-top: 1px solid var(--border); text-align: center; color: var(--text-dim); font-size: 13px; }
+
+/* Секция-приглашение (спокойный блок под hero). */
+.invite {
+  max-width: 760px; margin: 0 auto; text-align: center;
+  padding: 56px 24px;
+}
+.invite h2 {
+  font-size: clamp(24px, 4vw, 36px); font-weight: 300;
+  margin: 0 0 18px; letter-spacing: -0.3px;
+}
+.invite p {
+  color: var(--text-muted); font-size: 18px; line-height: 1.7;
+  max-width: 620px; margin: 0 auto;
+}
