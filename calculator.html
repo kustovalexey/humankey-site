@@ -22,8 +22,8 @@
       <span class="brand-name">HumanKey</span>
     </a>
     <nav class="nav-links">
+      <a href="/kb/">База знаний</a>
       <a href="/#features">Возможности</a>
-      <a href="/#faq">Вопросы</a>
       <a href="https://www.rustore.ru/catalog/app/tech.humankey.app?utm_source=site&amp;utm_medium=calc&amp;utm_campaign=rustore_download" class="nav-cta" target="_blank" rel="noopener noreferrer">Скачать</a>
     </nav>
   </div>
@@ -32,28 +32,32 @@
 <main>
   <section class="calc">
     <h1>Расчёт рейв-карты</h1>
-    <p class="section-sub">Введите данные рождения — получите тип, авторитет, профиль
-      и бодиграф Дизайна Человека. Точность как в приложении.</p>
+    <p class="section-sub">Введите данные рождения — получите тип, авторитет,
+      профиль и активные ворота Дизайна Человека. Расчёт идёт прямо в браузере,
+      ничего не отправляется на сервер.</p>
 
     <form class="calc-form" id="calcForm" autocomplete="off">
       <label>Дата рождения
-        <input type="date" name="date" required>
+        <input type="date" name="date" required min="1900-01-01" max="2099-12-31">
       </label>
       <label>Время рождения
-        <input type="time" name="time" required>
-        <small>Если время неизвестно — укажите примерно; точность профиля зависит от него.</small>
+        <input type="time" name="time" required value="12:00">
+        <small>Если время неизвестно — поставьте 12:00; профиль и линии могут быть неточны.</small>
       </label>
       <label>Место рождения
-        <input type="text" name="city" placeholder="Город" required>
+        <input type="text" name="city" id="cityInput" placeholder="Начните вводить город" required>
+        <input type="hidden" name="cityData" id="cityData">
+        <div class="calc-cities" id="cityList" hidden></div>
+        <small id="cityHint">Город нужен для часового пояса и координат.</small>
       </label>
-      <button type="submit" class="btn btn-primary btn-xl">Рассчитать</button>
+      <button type="submit" class="btn btn-primary btn-xl" id="calcBtn">Рассчитать</button>
     </form>
 
     <div class="calc-result" id="calcResult" hidden></div>
 
     <div class="calc-note">
-      <p><strong>Полный разбор</strong> — тип, стратегия, авторитет, инкарнационный
-      крест, активные каналы и ворота с интерпретациями — в приложении HumanKey.</p>
+      <p><strong>Полный разбор</strong> — стратегия, инкарнационный крест, каналы
+      и ворота с интерпретациями, бодиграф — в приложении HumanKey.</p>
       <a class="btn btn-primary btn-xl"
          href="https://www.rustore.ru/catalog/app/tech.humankey.app?utm_source=site&amp;utm_medium=calc&amp;utm_campaign=rustore_download"
          target="_blank" rel="noopener noreferrer">Открыть в приложении (RuStore)</a>
@@ -61,22 +65,118 @@
   </section>
 </main>
 
+<script src="js/astronomy.min.js"></script>
 <script src="js/hd-core.js"></script>
+<script src="js/hd-calc.js"></script>
 <script>
-  // ЭТАП 1 (фундамент): ядро HDCore подключено (маппинг долгота→ворота,
-  // центры, каналы). Астрономия (положения планет, design-арка 88°, узлы) и
-  // вывод типа/авторитета — этап 2 (astronomy-engine). Пока форма показывает
-  // заглушку и ведёт в приложение за полным расчётом.
+(function () {
+  'use strict';
+  var HDCalc = window.HDCalc, HDCore = window.HDCore, A = window.Astronomy;
+  var cities = [];
+  var chosen = null;
+
+  // --- Города: ленивая загрузка + автокомплит ---
+  fetch('data/cities.json').then(function (r) { return r.json(); })
+    .then(function (d) { cities = d; })
+    .catch(function () {
+      document.getElementById('cityHint').textContent = 'Не удалось загрузить список городов.';
+    });
+
+  var input = document.getElementById('cityInput');
+  var list = document.getElementById('cityList');
+  var hidden = document.getElementById('cityData');
+
+  input.addEventListener('input', function () {
+    chosen = null; hidden.value = '';
+    var q = input.value.trim().toLowerCase();
+    if (q.length < 2 || !cities.length) { list.hidden = true; return; }
+    var res = [];
+    for (var i = 0; i < cities.length && res.length < 8; i++) {
+      var c = cities[i];
+      if ((c.ru || '').toLowerCase().indexOf(q) === 0 ||
+          (c.en || '').toLowerCase().indexOf(q) === 0) res.push(c);
+    }
+    list.innerHTML = res.map(function (c, i) {
+      var label = (c.ru || c.en) + (c.region ? ', ' + c.region : '') + ' · ' + (c.country || '');
+      return '<div class="calc-city" data-i="' + i + '">' + label + '</div>';
+    }).join('');
+    list._res = res;
+    list.hidden = res.length === 0;
+  });
+
+  list.addEventListener('click', function (e) {
+    var el = e.target.closest('.calc-city'); if (!el) return;
+    var c = list._res[+el.dataset.i];
+    chosen = c;
+    input.value = (c.ru || c.en);
+    hidden.value = c.tz;
+    list.hidden = true;
+  });
+
+  // --- local (wall-clock) + IANA tz -> UTC Date (учёт исторического DST) ---
+  function localToUtc(y, mo, d, h, mi, tz) {
+    var dtf = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, hour12: false,
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+    });
+    function off(ms) {
+      var p = dtf.formatToParts(new Date(ms)), o = {};
+      for (var i = 0; i < p.length; i++) o[p[i].type] = p[i].value;
+      var asLocal = Date.UTC(+o.year, +o.month - 1, +o.day, (+o.hour) % 24, +o.minute, +o.second);
+      return asLocal - ms;
+    }
+    var guess = Date.UTC(y, mo - 1, d, h, mi);
+    var ms = guess - off(guess);
+    ms = guess - off(ms); // уточнение на границе перехода
+    return new Date(ms);
+  }
+
+  function row(label, value) {
+    return '<div class="res-row"><span>' + label + '</span><strong>' + value + '</strong></div>';
+  }
+
   document.getElementById('calcForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var box = document.getElementById('calcResult');
+    if (!chosen) {
+      box.hidden = false;
+      box.innerHTML = '<p>Выберите город из списка — он нужен для часового пояса.</p>';
+      return;
+    }
+    var f = e.target;
+    var dp = f.date.value.split('-'), tp = f.time.value.split(':');
+    var utc = localToUtc(+dp[0], +dp[1], +dp[2], +tp[0], +tp[1], chosen.tz);
+
+    var c;
+    try {
+      c = HDCalc.computeChart(A, HDCore, utc);
+    } catch (err) {
+      box.hidden = false;
+      box.innerHTML = '<p>Не удалось рассчитать: ' + err + '</p>';
+      return;
+    }
+    var centersRu = {
+      head: 'Голова', ajna: 'Аджна', throat: 'Горло', g: 'G-центр',
+      heart: 'Эго', 'solar-plexus': 'Солн. сплетение', sacral: 'Сакральный',
+      spleen: 'Селезёнка', root: 'Корень',
+    };
+    var centers = c.definedCenters.map(function (x) { return centersRu[x] || x; }).join(', ');
     box.hidden = false;
     box.innerHTML =
-      '<p>Онлайн-движок расчёта скоро заработает прямо здесь. ' +
-      'Пока полный расчёт рейв-карты доступен в приложении — ' +
-      'откройте его в RuStore ниже.</p>';
+      '<h2>' + c.typeRu + '</h2>' +
+      row('Стратегия', c.strategyRu) +
+      row('Авторитет', c.authorityRu) +
+      row('Профиль', c.profile.personality + '/' + c.profile.design) +
+      row('Инкарнационный крест', 'ворота ' + c.cross.personalitySun + '/' + c.cross.personalityEarth +
+          ' | ' + c.cross.designSun + '/' + c.cross.designEarth) +
+      row('Определённые центры', centers || 'нет (Рефлектор)') +
+      '<p class="res-gates"><span>Активные ворота:</span> ' + c.activeGates.join(', ') + '</p>' +
+      '<p class="res-note">Тип, авторитет и профиль совпадают с приложением. ' +
+      'Полный бодиграф и интерпретации — в HumanKey.</p>';
     box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
+})();
 </script>
 </body>
 </html>

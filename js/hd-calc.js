@@ -37,6 +37,21 @@
     return (lon % 360 + 360) % 360;
   }
 
+  // Долгота ВОСХОДЯЩЕГО узла Луны — TRUE (оскулирующий), как в приложении.
+  // Считаем из мгновенной орбиты: h = r × v (эклиптика даты) → Ω = atan2(hx,-hy).
+  function trueNodeLon(A, date) {
+    const dt = 1 / 1440; // 1 минута в днях
+    const t0 = A.MakeTime(date);
+    const rot = A.Rotation_EQJ_ECT(t0); // экв J2000 -> эклиптика даты
+    const ecl = (t) => A.RotateVector(rot, A.GeoMoon(t));
+    const p1 = ecl(t0.AddDays(-dt)), p2 = ecl(t0.AddDays(dt)), r = ecl(t0);
+    const v = { x: (p2.x - p1.x) / (2 * dt), y: (p2.y - p1.y) / (2 * dt), z: (p2.z - p1.z) / (2 * dt) };
+    const hx = r.y * v.z - r.z * v.y;
+    const hy = r.z * v.x - r.x * v.z;
+    let lon = Math.atan2(hx, -hy) * 180 / Math.PI;
+    return (lon % 360 + 360) % 360;
+  }
+
   // Активации всех тел на момент date -> { body: {gate,line,lon} }.
   function activationsAt(A, HDCore, date) {
     const out = {};
@@ -44,7 +59,9 @@
     out.Sun = withGate(HDCore, sun);
     out.Earth = withGate(HDCore, (sun + 180) % 360);
     for (const p of PLANETS) out[p] = withGate(HDCore, geoEclLon(A, p, date));
-    // TODO: North/South Node (TRUE node).
+    const node = trueNodeLon(A, date);
+    out.NorthNode = withGate(HDCore, node);
+    out.SouthNode = withGate(HDCore, (node + 180) % 360);
     return out;
   }
 
@@ -61,6 +78,61 @@
     return t ? t.date : null;
   }
 
+  const MOTORS = ['sacral', 'solar-plexus', 'heart', 'root'];
+  const TYPE_RU = {
+    'generator': 'Генератор', 'manifesting-generator': 'Манифестирующий Генератор',
+    'manifestor': 'Манифестор', 'projector': 'Проектор', 'reflector': 'Рефлектор',
+  };
+  const STRATEGY_RU = {
+    'generator': 'Ждать отклика', 'manifesting-generator': 'Ждать отклика, затем информировать',
+    'manifestor': 'Информировать перед действием', 'projector': 'Ждать приглашения',
+    'reflector': 'Ждать лунный цикл (28 дней)',
+  };
+  const AUTH_RU = {
+    'emotional': 'Эмоциональный (Солнечное сплетение)', 'sacral': 'Сакральный',
+    'splenic': 'Селезёночный', 'ego': 'Эго (Сердце)',
+    'self-projected': 'Само-проецируемый (G-центр)', 'mental': 'Ментальный (звуковой)',
+    'lunar': 'Лунный (Рефлектор)',
+  };
+
+  // Тип/авторитет из определённых центров и связности мотор→горло по каналам.
+  function derive(HDCore, gatesSet, definedArr) {
+    const defined = new Set(definedArr);
+    const adj = {};
+    const edge = (a, b) => { (adj[a] = adj[a] || new Set()).add(b); (adj[b] = adj[b] || new Set()).add(a); };
+    for (const [g1, g2] of HDCore.CHANNELS) {
+      if (gatesSet.has(g1) && gatesSet.has(g2)) {
+        edge(HDCore.GATE_TO_CENTER[g1], HDCore.GATE_TO_CENTER[g2]);
+      }
+    }
+    // Компонента связности, содержащая горло.
+    const reach = new Set();
+    if (defined.has('throat')) {
+      const st = ['throat']; reach.add('throat');
+      while (st.length) { const c = st.pop(); for (const n of (adj[c] || [])) if (!reach.has(n)) { reach.add(n); st.push(n); } }
+    }
+    const motorToThroat = MOTORS.some((m) => reach.has(m));
+
+    let type;
+    if (defined.size === 0) type = 'reflector';
+    else if (defined.has('sacral')) type = motorToThroat ? 'manifesting-generator' : 'generator';
+    else if (motorToThroat) type = 'manifestor';
+    else type = 'projector';
+
+    let authority;
+    if (defined.has('solar-plexus')) authority = 'emotional';
+    else if (defined.has('sacral')) authority = 'sacral';
+    else if (defined.has('spleen')) authority = 'splenic';
+    else if (defined.has('heart')) authority = 'ego';
+    else if (defined.has('g')) authority = 'self-projected';
+    else authority = type === 'reflector' ? 'lunar' : 'mental';
+
+    return {
+      type, authority, strategy: type,
+      typeRu: TYPE_RU[type], authorityRu: AUTH_RU[authority], strategyRu: STRATEGY_RU[type],
+    };
+  }
+
   /** Полный расчёт по моменту рождения (UTC Date). */
   function computeChart(A, HDCore, birthUtc) {
     const pers = activationsAt(A, HDCore, birthUtc);
@@ -70,12 +142,16 @@
     const gates = new Set();
     for (const k in pers) gates.add(pers[k].gate);
     for (const k in des) gates.add(des[k].gate);
-    const defined = HDCore.definedCenters([...gates]); // Set имён центров
+    const defined = HDCore.definedCenters([...gates]);
+    const d = derive(HDCore, gates, [...defined]);
 
     return {
       personality: pers,
       design: des,
       designDate: dDate,
+      type: d.type, typeRu: d.typeRu,
+      authority: d.authority, authorityRu: d.authorityRu,
+      strategyRu: d.strategyRu,
       profile: { personality: pers.Sun.line, design: des.Sun ? des.Sun.line : null },
       cross: {
         personalitySun: pers.Sun.gate, personalityEarth: pers.Earth.gate,
@@ -84,9 +160,8 @@
       },
       activeGates: [...gates].sort((a, b) => a - b),
       definedCenters: [...defined],
-      // TODO: type, authority, strategy — производные от центров/каналов.
     };
   }
 
-  return { computeChart, activationsAt, designDate, geoEclLon };
+  return { computeChart, activationsAt, designDate, geoEclLon, trueNodeLon };
 });

@@ -540,3 +540,24 @@ footer {
 .kb-list a { display: block; padding: 10px 14px; background: var(--surface); border: 1px solid rgba(245,158,11,0.12); border-radius: 10px; color: var(--text); font-size: 14px; transition: border-color .18s, transform .18s; }
 .kb-list a:hover { border-color: var(--amber); color: var(--amber-light); transform: translateX(2px); }
 .kb-foot { max-width: 780px; margin: 40px auto 0; padding: 24px; border-top: 1px solid var(--border); text-align: center; color: var(--text-dim); font-size: 13px; }
+
+/* Калькулятор: автокомплит города + результат. */
+.calc-form label { position: relative; }
+.calc-cities {
+  position: absolute; z-index: 5; left: 0; right: 0; top: 100%;
+  background: var(--surface-alt); border: 1px solid var(--border);
+  border-radius: 10px; margin-top: 4px; overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.calc-city { padding: 10px 14px; cursor: pointer; font-size: 14px; color: var(--text); }
+.calc-city:hover { background: rgba(245,158,11,0.12); color: var(--amber-light); }
+.res-row {
+  display: flex; justify-content: space-between; gap: 16px;
+  padding: 10px 0; border-bottom: 1px solid rgba(245,158,11,0.12);
+}
+.res-row span { color: var(--text-muted); font-size: 14px; }
+.res-row strong { color: var(--text); text-align: right; }
+.calc-result h2 { font-size: 26px; font-weight: 300; margin: 0 0 14px; color: var(--amber-light); }
+.res-gates { margin-top: 14px; font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.res-gates span { color: var(--text-dim); }
+.res-note { margin-top: 12px; font-size: 13px; color: var(--text-dim); }
