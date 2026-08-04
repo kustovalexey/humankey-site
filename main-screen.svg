@@ -16,7 +16,7 @@ viewBox="0 0 1326 1325.999"
     .str2 {stroke:#F59E0B;stroke-miterlimit:22.9256}
     .str0 {stroke:#7C4A08;stroke-miterlimit:22.9256}
     .fil1 {fill:none}
-    .fil0 {fill:#0A0614}                                     /* фон */
+    .fil0 {fill:none}                                     /* фон */
     .fil6 {fill:#A78BFA;fill-opacity:0.30}               /* 9 центров */
     .fil7 {fill:#2A1A08}                               /* кружки ворот */
     .fil10 {fill:#2A1A08}

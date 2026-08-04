@@ -207,17 +207,68 @@ img.brand-mark { object-fit: cover; border-radius: 6px; box-shadow: 0 0 12px rgb
   position: relative;
 }
 /* Иллюстрация главного экрана приложения (колесо 64 Ключей + бодиграф),
-   готовый арт Светланы в палитре HumanKey. Оформлена карточкой-превью. */
+   готовый арт Светланы. Фон прозрачный — «плавает» на фоне сайта. «Живая»:
+   мягкое дыхание + пульсирующее золотое свечение (как сияние в приложении). */
 .hero-app {
   width: 100%;
-  max-width: 460px;
+  max-width: 480px;
   height: auto;
-  border-radius: 24px;
-  background: #0A0614;
-  padding: 10px;
-  box-shadow: 0 0 70px rgba(245, 158, 11, 0.18),
-              0 24px 60px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0 0 28px rgba(245, 158, 11, 0.22));
+  animation: heroBreath 6.5s ease-in-out infinite;
+  transform-origin: center;
 }
+@keyframes heroBreath {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.18));
+  }
+  50% {
+    transform: scale(1.015);
+    filter: drop-shadow(0 0 48px rgba(251, 191, 36, 0.40));
+  }
+}
+@media (prefers-reduced-motion: reduce) { .hero-app { animation: none; } }
+
+/* ------------------- CALCULATOR (calculator.html) ------------------- */
+.calc { max-width: 640px; margin: 0 auto; padding-top: 90px; }
+.calc h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 300; margin: 0 0 10px; }
+.calc-form {
+  display: flex; flex-direction: column; gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 24px 0;
+}
+.calc-form label {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 14px; color: var(--text-muted);
+}
+.calc-form small { color: var(--text-dim); font-size: 12px; }
+.calc-form input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+}
+.calc-form input:focus { outline: none; border-color: var(--amber); }
+.calc-form .btn { align-self: flex-start; margin-top: 6px; }
+.calc-result {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+.calc-note {
+  border-top: 1px solid var(--border);
+  padding-top: 24px; text-align: center;
+}
+.calc-note p { color: var(--text-muted); margin: 0 0 16px; }
 
 /* ------------------- SECTIONS ------------------- */
 section { padding: 60px 24px; }

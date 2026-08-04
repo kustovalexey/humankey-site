@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Расчёт рейв-карты — HumanKey</title>
+<meta name="description" content="Онлайн-расчёт рейв-карты Дизайна Человека по дате, времени и месту рождения: тип, авторитет, профиль, бодиграф. Бесплатно.">
+<meta name="theme-color" content="#0A0614">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <img class="brand-mark" src="icon-512.png" alt="HumanKey" width="28" height="28">
+      <span class="brand-name">HumanKey</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/#features">Возможности</a>
+      <a href="/#faq">Вопросы</a>
+      <a href="https://www.rustore.ru/catalog/app/tech.humankey.app?utm_source=site&amp;utm_medium=calc&amp;utm_campaign=rustore_download" class="nav-cta" target="_blank" rel="noopener noreferrer">Скачать</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="calc">
+    <h1>Расчёт рейв-карты</h1>
+    <p class="section-sub">Введите данные рождения — получите тип, авторитет, профиль
+      и бодиграф Дизайна Человека. Точность как в приложении.</p>
+
+    <form class="calc-form" id="calcForm" autocomplete="off">
+      <label>Дата рождения
+        <input type="date" name="date" required>
+      </label>
+      <label>Время рождения
+        <input type="time" name="time" required>
+        <small>Если время неизвестно — укажите примерно; точность профиля зависит от него.</small>
+      </label>
+      <label>Место рождения
+        <input type="text" name="city" placeholder="Город" required>
+      </label>
+      <button type="submit" class="btn btn-primary btn-xl">Рассчитать</button>
+    </form>
+
+    <div class="calc-result" id="calcResult" hidden></div>
+
+    <div class="calc-note">
+      <p><strong>Полный разбор</strong> — тип, стратегия, авторитет, инкарнационный
+      крест, активные каналы и ворота с интерпретациями — в приложении HumanKey.</p>
+      <a class="btn btn-primary btn-xl"
+         href="https://www.rustore.ru/catalog/app/tech.humankey.app?utm_source=site&amp;utm_medium=calc&amp;utm_campaign=rustore_download"
+         target="_blank" rel="noopener noreferrer">Открыть в приложении (RuStore)</a>
+    </div>
+  </section>
+</main>
+
+<script src="js/hd-core.js"></script>
+<script>
+  // ЭТАП 1 (фундамент): ядро HDCore подключено (маппинг долгота→ворота,
+  // центры, каналы). Астрономия (положения планет, design-арка 88°, узлы) и
+  // вывод типа/авторитета — этап 2 (astronomy-engine). Пока форма показывает
+  // заглушку и ведёт в приложение за полным расчётом.
+  document.getElementById('calcForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var box = document.getElementById('calcResult');
+    box.hidden = false;
+    box.innerHTML =
+      '<p>Онлайн-движок расчёта скоро заработает прямо здесь. ' +
+      'Пока полный расчёт рейв-карты доступен в приложении — ' +
+      'откройте его в RuStore ниже.</p>';
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>
+</body>
+</html>
