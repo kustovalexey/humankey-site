@@ -21,7 +21,7 @@ viewBox="0 0 1326 1325.999"
     .fil7 {fill:#2A1A08}                               /* кружки ворот */
     .fil10 {fill:#2A1A08}
     .fil2 {fill:#FDE68A}                               /* гексаграммы */
-    .fil4 {fill:#1C1024;fill-opacity:0.85}                             /* силуэт */
+    .fil4 {fill:#1C1024;fill-opacity:0.85;stroke:#F59E0B;stroke-width:3.5;stroke-opacity:0.92}                             /* силуэт */
     .fil5 {fill:#FDE68A;fill-rule:nonzero}
     .fil8 {fill:#FDE68A;fill-rule:nonzero}             /* цифры в воротах */
     .fil9 {fill:#FDE68A;fill-rule:nonzero}
