@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>HumanKey — рейв-карта</title>
+<meta name="description" content="Расчёт рейв-карты Дизайна Человека: тип, стратегия, авторитет, профиль, бодиграф. Бесплатно, прямо во ВКонтакте.">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="stylesheet" href="vk.css">
+</head>
+<body>
+<!--
+  HumanKey VK Mini App (ТЗ TZ_VK_MINI_APP 24.10, путь Б).
+  Бесплатная демо-воронка в мобильное приложение: расчёт + бесплатная часть
+  расшифровки (как у Free в приложении). Платного контента нет по дизайну.
+  Расчёт — калькулятор сайта (../js), тексты — ./data/content.json
+  (генерится tools/build_vk_content.py из ассетов приложения).
+  Данные — только localStorage этого устройства, на сервер ничего не уходит.
+-->
+<main class="app">
+  <header class="top">
+    <img src="../icon-192.png" alt="" class="logo" width="40" height="40">
+    <div>
+      <div class="brand">HumanKey</div>
+      <div class="tagline">Рейв-карта Дизайна Человека</div>
+    </div>
+  </header>
+
+  <!-- ── Экран: форма + сохранённые карты ── -->
+  <section id="screenForm">
+    <form class="card form" id="calcForm" autocomplete="off">
+      <h1>Рассчитать карту</h1>
+      <label>Имя <small>(необязательно)</small>
+        <input type="text" name="name" maxlength="40" placeholder="Например, Анна">
+      </label>
+      <div class="row">
+        <label>Дата рождения
+          <input type="date" name="date" required min="1900-01-01" max="2099-12-31">
+        </label>
+        <label>Время
+          <input type="time" name="time" required value="12:00">
+        </label>
+      </div>
+      <small class="hint">Не знаете время — оставьте 12:00: тип обычно верный, профиль и линии могут сместиться.</small>
+      <label class="city">Город рождения
+        <input type="text" name="city" id="cityInput" placeholder="Начните вводить город" required>
+        <div class="cities" id="cityList" hidden></div>
+      </label>
+      <small class="hint" id="cityHint">Город нужен для часового пояса.</small>
+      <button type="submit" class="btn btn-primary" id="calcBtn">Рассчитать</button>
+      <p class="privacy">Расчёт идёт на вашем устройстве, ничего не отправляется на сервер.</p>
+    </form>
+
+    <div class="card saved" id="saved" hidden>
+      <h2>Мои карты</h2>
+      <ul id="savedList"></ul>
+    </div>
+  </section>
+
+  <!-- ── Экран: результат ── -->
+  <section id="screenResult" hidden>
+    <button class="back" id="backBtn" type="button">← Новый расчёт</button>
+    <div id="result"></div>
+  </section>
+</main>
+
+<script src="js/vk-bridge-2.15.12.umd.js"></script>
+<script src="../js/astronomy.min.js"></script>
+<script src="../js/hd-core.js"></script>
+<script src="../js/hd-calc.js"></script>
+<script src="js/hd-render.js"></script>
+<script src="js/vk-app.js"></script>
+</body>
+</html>
