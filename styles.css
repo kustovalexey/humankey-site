@@ -393,6 +393,8 @@ section h2 {
   color: var(--amber);
   margin-bottom: 10px;
 }
+.os-icon:has(svg) { height: 48px; display: flex; align-items: center; justify-content: center; }
+.os-icon svg { display: block; margin: 0 auto; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.35)); }
 .download-card h3 {
   font-size: 22px;
   margin: 0 0 8px;
