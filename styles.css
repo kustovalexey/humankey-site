@@ -393,6 +393,8 @@ section h2 {
   color: var(--amber);
   margin-bottom: 10px;
 }
+.os-icon:has(svg) { height: 48px; display: flex; align-items: center; justify-content: center; }
+.os-icon svg { display: block; margin: 0 auto; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.35)); }
 .download-card h3 {
   font-size: 22px;
   margin: 0 0 8px;
@@ -562,3 +564,13 @@ footer {
 .res-gates { margin-top: 14px; font-size: 13px; color: var(--text-muted); line-height: 1.6; }
 .res-gates span { color: var(--text-dim); }
 .res-note { margin-top: 12px; font-size: 13px; color: var(--text-dim); }
+
+/* Карточки тарифов на pay.html (ТЗ 03.11: кнопки «Купить» для ЮKassa). */
+.plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 18px 0 10px; }
+.plan-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; }
+.plan-name { font-weight: 600; color: var(--text); }
+.plan-price { font-size: 24px; font-weight: 700; color: var(--amber); margin: 6px 0 4px; }
+.legal .plan-desc { font-size: 14px; margin: 0 0 14px; flex: 1; }
+.legal a.plan-buy { color: var(--bg); text-align: center; }
+.legal a.plan-buy:hover { color: var(--bg); }
+.legal .plan-note { font-size: 13px; color: var(--text-dim); }
