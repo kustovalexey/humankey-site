@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=110781038', 'ym');
+
+   ym(110781038, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/110781038" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<title>Оформление заказа · HumanKey</title>
+<meta name="description" content="Оформление заказа доступа к приложению HumanKey: выбранный тариф, почта для чека и кода доступа, оплата картой или через СБП.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="favicon-32.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <img class="brand-mark" src="icon-512.png" alt="HumanKey" width="28" height="28">
+      <span class="brand-name">HumanKey</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="pay.html">Тарифы</a>
+      <a href="offer.html">Оферта</a>
+      <a href="mailto:humankey.team@yandex.ru">Связаться</a>
+    </nav>
+  </div>
+</header>
+
+<main class="legal">
+  <h1>Оформление заказа</h1>
+  <p class="meta">Товар — цифровой доступ к платным разделам мобильного
+  приложения HumanKey на выбранный срок или бессрочно.</p>
+
+  <h2>1. Ваш заказ</h2>
+  <div class="order-card">
+    <label class="order-label" for="plan">Тариф</label>
+    <select id="plan" class="order-input">
+      <option value="light-monthly">Light на 1 месяц — 449 ₽</option>
+      <option value="light-yearly">Light на 1 год — 3 690 ₽</option>
+      <option value="medium-monthly">Medium на 1 месяц — 749 ₽</option>
+      <option value="medium-yearly">Medium на 1 год — 5 590 ₽</option>
+      <option value="lifetime">Навсегда — 14 990 ₽</option>
+    </select>
+    <p class="order-desc" id="plan-desc"></p>
+    <div class="order-total">
+      <span>К оплате</span>
+      <strong id="plan-price"></strong>
+    </div>
+  </div>
+
+  <h2>2. Почта для чека и кода доступа</h2>
+  <form id="order-form" class="order-card" novalidate>
+    <label class="order-label" for="email">Электронная почта</label>
+    <input id="email" class="order-input" type="email" autocomplete="email"
+      placeholder="you@example.ru" required>
+    <p class="order-hint">На неё придут кассовый чек и письмо с кнопкой
+    «Активировать в приложении».</p>
+
+    <label class="order-check">
+      <input id="consent" type="checkbox" required>
+      <span>Я принимаю условия <a href="offer.html" target="_blank">Публичной
+      оферты</a> и <a href="privacy.html" target="_blank">Политики
+      конфиденциальности</a>.</span>
+    </label>
+
+    <p class="order-error" id="order-error" hidden></p>
+    <button class="btn btn-primary order-pay" type="submit">Перейти к оплате</button>
+    <p class="order-hint">Оплата банковской картой (Мир, Visa, Mastercard)
+    или через СБП на защищённой странице ЮKassa. Разовый платёж,
+    без автоматического продления.</p>
+  </form>
+
+  <div class="order-card order-pending" id="order-pending" hidden>
+    <p><strong>Заказ сформирован.</strong> Онлайн-оплата на сайте
+    подключается. Пока мы пришлём ссылку на оплату через ЮKassa письмом,
+    обычно в течение рабочего дня.</p>
+    <a class="btn btn-primary" id="order-mail" href="#">Отправить заказ письмом</a>
+  </div>
+
+  <h2>3. Что будет после оплаты</h2>
+  <ol>
+    <li>Вы оплачиваете заказ на защищённой странице ЮKassa. Данные карты
+    вводятся там, HumanKey их не получает.</li>
+    <li>На почту приходит электронный кассовый чек.</li>
+    <li>Следом приходит письмо с кнопкой «Активировать в приложении».
+    Откройте его на телефоне, где установлен HumanKey, — тариф включится
+    автоматически. Если оплачивали с телефона, приложение откроется
+    и активирует тариф сразу после оплаты.</li>
+  </ol>
+  <p>Срок доступа отсчитывается от даты оплаты. Подробно — на странице
+  <a href="pay.html">«Оплата и получение доступа»</a>, условия возврата —
+  в <a href="offer.html">Публичной оферте</a>. Вопросы:
+  <a href="mailto:humankey.team@yandex.ru">humankey.team@yandex.ru</a>.</p>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img class="brand-mark" src="icon-512.png" alt="HumanKey" width="28" height="28">
+      <span>HumanKey</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://vk.com/humankey" target="_blank" rel="noopener">ВКонтакте</a>
+      <a href="https://t.me/HumanKey_tech" target="_blank" rel="noopener">Telegram</a>
+      <a href="pay.html">Оплата и доступ</a>
+      <a href="offer.html">Публичная оферта</a>
+      <a href="privacy.html">Политика конфиденциальности</a>
+      <a href="terms.html">Пользовательское соглашение</a>
+      <a href="mailto:humankey.team@yandex.ru">Связаться</a>
+    </div>
+    <div class="footer-copy">
+      © 2026 HumanKey. Сделано с вниманием.<br>
+      <span class="footer-req">ИП Кустов Алексей Андреевич · ИНН 592008927017 · ОГРНИП 322595800026232 · Пермский край, г. Чайковский, ул. Промышленная, д. 4/31 · +7 (922) 301-73-31 · humankey.team@yandex.ru</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Тарифы — как на pay.html и в оферте (п. 4.1). После одобрения ЮKassa
+  // submit уходит на создание платежа (облачная функция → confirmation_url).
+  var PLANS = {
+    'light-monthly': { name: 'Light на 1 месяц', price: '449 ₽',
+      desc: 'Все 64 ключа, расклады, дневник, полный бодиграф, кодоновые кольца, личный транзит, озвучка и безлимит расчётов. Доступ на 1 месяц.' },
+    'light-yearly': { name: 'Light на 1 год', price: '3 690 ₽',
+      desc: 'То же, что Light на месяц, на 1 год — выгоднее на 31%.' },
+    'medium-monthly': { name: 'Medium на 1 месяц', price: '749 ₽',
+      desc: 'Всё из Light плюс полная расшифровка рейв-карты: 12 блоков. Доступ на 1 месяц.' },
+    'medium-yearly': { name: 'Medium на 1 год', price: '5 590 ₽',
+      desc: 'То же, что Medium на месяц, на 1 год — выгоднее на 38%.' },
+    'lifetime': { name: 'Навсегда', price: '14 990 ₽',
+      desc: 'Все уровни, доступные на дату покупки, и их обновления. Разовая оплата.' }
+  };
+  var sel = document.getElementById('plan');
+  var q = new URLSearchParams(location.search).get('plan');
+  if (q && PLANS[q]) sel.value = q;
+
+  function render() {
+    var p = PLANS[sel.value];
+    document.getElementById('plan-desc').textContent = p.desc;
+    document.getElementById('plan-price').textContent = p.price;
+  }
+  sel.addEventListener('change', render);
+  render();
+
+  document.getElementById('order-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email');
+    var err = document.getElementById('order-error');
+    var msg = '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) msg = 'Укажите почту — на неё придут чек и код доступа.';
+    else if (!document.getElementById('consent').checked) msg = 'Чтобы продолжить, примите условия оферты.';
+    err.textContent = msg;
+    err.hidden = !msg;
+    if (msg) return;
+    var p = PLANS[sel.value];
+    var subject = 'Оплата HumanKey — ' + p.name;
+    var body = 'Хочу оплатить ' + p.name + ', ' + p.price + '. Почта для чека и кода: ' + email.value.trim() + '. Пришлите ссылку на оплату.';
+    document.getElementById('order-mail').href = 'mailto:humankey.team@yandex.ru?subject=' +
+      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    if (window.ym) ym(110781038, 'reachGoal', 'checkout_submit');
+    document.getElementById('order-pending').hidden = false;
+    document.getElementById('order-pending').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+})();
+</script>
+</body>
+</html>
