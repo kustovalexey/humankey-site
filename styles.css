@@ -616,3 +616,6 @@ footer {
 .order-pay { width: 100%; justify-content: center; }
 .legal a.btn-primary { color: var(--bg); }
 .order-pending { border-color: var(--amber); }
+
+.order-renew { margin: 4px 0 14px; color: var(--text-muted); font-size: 14px; }
+.order-renew summary { cursor: pointer; color: var(--amber); margin-bottom: 8px; }

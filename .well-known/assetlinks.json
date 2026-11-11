@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "tech.humankey.app",
+    "sha256_cert_fingerprints": ["B6:7B:70:6E:AF:86:11:78:3D:D9:4A:62:56:51:AF:1A:B1:FA:04:06:65:96:91:3F:32:52:DD:74:0E:EC:8D:D1"]
+  }
+}]

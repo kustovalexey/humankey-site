@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Активация доступа · HumanKey</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="../favicon-32.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <img class="brand-mark" src="../icon-512.png" alt="HumanKey" width="28" height="28">
+      <span class="brand-name">HumanKey</span>
+    </a>
+  </div>
+</header>
+
+<main class="legal">
+  <h1>Активация доступа</h1>
+
+  <div class="order-card" id="has-code">
+    <p>На телефоне с установленным HumanKey нажмите кнопку — приложение
+    откроется и само включит оплаченный тариф.</p>
+    <a class="btn btn-primary order-pay" id="open" href="#">Открыть HumanKey</a>
+    <p class="order-hint">Не открывается? Скопируйте код и введите его
+    в приложении: Настройки → «Есть промокод?».</p>
+    <input class="order-input" id="code" readonly onclick="this.select()">
+    <p class="order-hint">Приложения ещё нет? Установите
+    <a href="https://www.rustore.ru/catalog/app/tech.humankey.app" target="_blank" rel="noopener">HumanKey из RuStore</a>
+    и вернитесь к этому письму.</p>
+  </div>
+
+  <div class="order-card" id="no-code" hidden>
+    <p>В ссылке нет кода доступа. Откройте ссылку из письма об оплате
+    целиком или напишите в техподдержку:
+    <a href="mailto:humankey.team@yandex.ru">humankey.team@yandex.ru</a>.</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  // Если приложение установлено и ссылка подтверждена (App Links), Android
+  // откроет его сразу и эта страница не покажется. Иначе — кнопка с
+  // запасной схемой humankey:// и код для ручного ввода.
+  var c = new URLSearchParams(location.search).get('c');
+  if (!c) {
+    document.getElementById('has-code').hidden = true;
+    document.getElementById('no-code').hidden = false;
+    return;
+  }
+  document.getElementById('code').value = c;
+  var deep = 'humankey://activate?c=' + encodeURIComponent(c);
+  var isAndroid = /android/i.test(navigator.userAgent);
+  document.getElementById('open').href = isAndroid
+    ? 'intent://activate?c=' + encodeURIComponent(c) +
+      '#Intent;scheme=humankey;package=tech.humankey.app;end'
+    : deep;
+})();
+</script>
+</body>
+</html>

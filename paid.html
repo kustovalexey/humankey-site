@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Оплата · HumanKey</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="favicon-32.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <img class="brand-mark" src="icon-512.png" alt="HumanKey" width="28" height="28">
+      <span class="brand-name">HumanKey</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="pay.html">Тарифы</a>
+      <a href="mailto:humankey.team@yandex.ru">Связаться</a>
+    </nav>
+  </div>
+</header>
+
+<main class="legal">
+  <h1 id="title">Проверяем оплату…</h1>
+
+  <div class="order-card" id="wait">
+    <p>Получаем подтверждение от ЮKassa — обычно это несколько секунд.
+    Страницу можно не обновлять.</p>
+  </div>
+
+  <div class="order-card order-pending" id="ok" hidden>
+    <p><strong>Оплата прошла.</strong> <span id="ok-what"></span></p>
+    <p>Если вы на телефоне с HumanKey — нажмите кнопку, тариф включится сам.
+    С компьютера — откройте письмо, которое мы прислали, на телефоне.</p>
+    <a class="btn btn-primary order-pay" id="activate" href="#">Активировать в приложении</a>
+    <p class="order-hint">Код доступа — на случай, если кнопка не откроет
+    приложение (Настройки → «Есть промокод?»). Он же пришёл письмом —
+    сохраните его.</p>
+    <input class="order-input" id="code" readonly onclick="this.select()">
+  </div>
+
+  <div class="order-card" id="fail" hidden>
+    <p id="fail-text"></p>
+    <a class="btn btn-primary" href="pay.html">Вернуться к тарифам</a>
+  </div>
+
+  <p class="order-hint">Вопросы об оплате:
+  <a href="mailto:humankey.team@yandex.ru">humankey.team@yandex.ru</a>.</p>
+</main>
+
+<script>
+(function () {
+  // Возврат с ЮKassa (RETURN_URL сервера оплаты). id платежа сохранила
+  // checkout.html перед переходом на оплату.
+  var API = window.HK_PAY_API || '';
+  var qs = new URLSearchParams(location.search);
+  if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname) && qs.get('api')) API = qs.get('api');
+  var id = qs.get('id');
+  try { id = id || localStorage.getItem('hk_pay_id'); } catch (_) {}
+  var PLAN = {
+    'light-monthly': 'Light на 1 месяц', 'light-yearly': 'Light на 1 год',
+    'medium-monthly': 'Medium на 1 месяц', 'medium-yearly': 'Medium на 1 год', 'lifetime': 'Навсегда'
+  };
+  function show(el) { ['wait', 'ok', 'fail'].forEach(function (x) { document.getElementById(x).hidden = x !== el; }); }
+  function fail(text) {
+    document.getElementById('title').textContent = 'Оплата не завершена';
+    document.getElementById('fail-text').textContent = text;
+    show('fail');
+  }
+  if (!API || !id) return fail('Не нашли данные платежа на этом устройстве. Если деньги списались — письмо с доступом придёт на почту, указанную при оплате. Если письма нет 15 минут — напишите в техподдержку.');
+
+  var tries = 0;
+  function poll() {
+    fetch(API + '?action=status&id=' + encodeURIComponent(id))
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j.code) {
+          document.getElementById('title').textContent = 'Спасибо!';
+          document.getElementById('ok-what').textContent = 'HumanKey — ' + (PLAN[j.plan] || '') +
+            (j.access_until ? ', доступ до ' + j.access_until + ' включительно.' : ', доступ бессрочный.') +
+            (j.test ? ' (тестовый платёж)' : '');
+          document.getElementById('activate').href = j.activate_url;
+          document.getElementById('code').value = j.code;
+          try { localStorage.removeItem('hk_pay_id'); } catch (_) {}
+          return show('ok');
+        }
+        if (j.status === 'canceled') return fail('Платёж отменён — деньги не списаны. Можно попробовать ещё раз.');
+        if (++tries < 40) return setTimeout(poll, 3000);
+        fail('ЮKassa ещё не подтвердила оплату. Если деньги списались — письмо с доступом придёт на почту; если его нет 15 минут — напишите в техподдержку.');
+      })
+      .catch(function () { if (++tries < 40) setTimeout(poll, 3000); else fail('Нет связи с сервером оплаты. Если деньги списались — письмо придёт на почту.'); });
+  }
+  poll();
+})();
+</script>
+</body>
+</html>

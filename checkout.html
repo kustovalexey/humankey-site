@@ -69,6 +69,15 @@
     <p class="order-hint">На неё придут кассовый чек и письмо с кнопкой
     «Активировать в приложении».</p>
 
+    <details class="order-renew">
+      <summary>Продлеваю доступ — у меня уже есть код</summary>
+      <input id="renew" class="order-input" type="text" autocomplete="off"
+        spellcheck="false" placeholder="HK1…">
+      <p class="order-hint">Код из письма о прошлой оплате. Если тариф тот же,
+      новый срок начнётся с даты окончания текущего доступа — оставшиеся дни
+      не пропадут.</p>
+    </details>
+
     <label class="order-check">
       <input id="consent" type="checkbox" required>
       <span>Я принимаю условия <a href="offer.html" target="_blank">Публичной
@@ -144,6 +153,13 @@
     'lifetime': { name: 'Навсегда', price: '14 990 ₽',
       desc: 'Все уровни, доступные на дату покупки, и их обновления. Разовая оплата.' }
   };
+  // Адрес сервера оплаты. Пусто — онлайн-оплата не подключена, заказ
+  // письмом. Для локального теста: ?api=http://127.0.0.1:8787/ (только localhost).
+  var API = window.HK_PAY_API || '';
+  var qs = new URLSearchParams(location.search);
+  if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname) && qs.get('api')) API = qs.get('api');
+  window.HK_PAY_API_USED = API;
+
   var sel = document.getElementById('plan');
   var q = new URLSearchParams(location.search).get('plan');
   if (q && PLANS[q]) sel.value = q;
@@ -167,11 +183,38 @@
     err.hidden = !msg;
     if (msg) return;
     var p = PLANS[sel.value];
+    var renew = document.getElementById('renew').value.replace(/\s+/g, '');
+    if (window.ym) ym(110781038, 'reachGoal', 'checkout_submit');
+
+    if (API) {
+      // Сервер оплаты (server/payments): создаёт платёж, отдаёт страницу ЮKassa.
+      var btn = e.submitter || document.querySelector('.order-pay');
+      btn.disabled = true;
+      fetch(API + '?action=create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: sel.value, email: email.value.trim(), renew_code: renew || undefined, source: 'site' })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok || !res.j.confirmation_url) {
+            var e2 = res.j.error === 'bad_renew_code' ? 'Код для продления не распознан — проверьте, что скопировали его целиком.' : 'Не удалось создать платёж. Попробуйте ещё раз или напишите в техподдержку.';
+            err.textContent = e2; err.hidden = false; btn.disabled = false;
+            return;
+          }
+          try { localStorage.setItem('hk_pay_id', res.j.id); } catch (_) {}
+          location.href = res.j.confirmation_url;
+        })
+        .catch(function () {
+          err.textContent = 'Нет связи с сервером оплаты. Попробуйте ещё раз.'; err.hidden = false; btn.disabled = false;
+        });
+      return;
+    }
+
     var subject = 'Оплата HumanKey — ' + p.name;
-    var body = 'Хочу оплатить ' + p.name + ', ' + p.price + '. Почта для чека и кода: ' + email.value.trim() + '. Пришлите ссылку на оплату.';
+    var body = 'Хочу оплатить ' + p.name + ', ' + p.price + '. Почта для чека и кода: ' + email.value.trim() + '.' +
+      (renew ? ' Продлеваю доступ, мой код: ' + renew + '.' : '') + ' Пришлите ссылку на оплату.';
     document.getElementById('order-mail').href = 'mailto:humankey.team@yandex.ru?subject=' +
       encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    if (window.ym) ym(110781038, 'reachGoal', 'checkout_submit');
     document.getElementById('order-pending').hidden = false;
     document.getElementById('order-pending').scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
