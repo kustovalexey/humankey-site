@@ -296,16 +296,18 @@ section h2 {
   border-color: var(--border);
   transform: translateY(-2px);
 }
+/* Иконки-медальоны HumanKey (как в приложении 2.2.x) */
 .feature-icon {
-  width: 44px; height: 44px;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(245, 158, 11, 0.1);
-  color: var(--amber);
-  border-radius: 12px;
-  font-size: 22px;
+  width: 64px; height: 64px;
   margin-bottom: 14px;
-  border: 1px solid rgba(245, 158, 11, 0.3);
 }
+.feature-icon img, .plan-icon {
+  display: block;
+  width: 100%; height: auto;
+  filter: drop-shadow(0 0 10px rgba(232, 184, 92, 0.22));
+}
+.plan-icon { width: 56px; margin-bottom: 10px; }
+.plan-grid .plan-icon { width: 48px; }
 .feature h3 {
   font-size: 18px;
   font-weight: 600;
@@ -619,3 +621,6 @@ footer {
 
 .order-renew { margin: 4px 0 14px; color: var(--text-muted); font-size: 14px; }
 .order-renew summary { cursor: pointer; color: var(--amber); margin-bottom: 8px; }
+
+/* Плашка «Выгоднее всего» над рамкой карточки — иконки тарифов в один ряд (23.11) */
+.plan-card-best .plan-tag { position: absolute; top: -12px; left: 18px; margin: 0; }
