@@ -56,6 +56,8 @@
 (function () {
   // Возврат с ЮKassa (RETURN_URL сервера оплаты). id платежа сохранила
   // checkout.html перед переходом на оплату.
+  // Платёжный сервер (Yandex Cloud, боевой магазин ЮKassa 1516138, 24.11).
+  window.HK_PAY_API = window.HK_PAY_API || 'https://functions.yandexcloud.net/d4e7kpcbc4at6sv92hmc';
   var API = window.HK_PAY_API || '';
   var qs = new URLSearchParams(location.search);
   if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname) && qs.get('api')) API = qs.get('api');
