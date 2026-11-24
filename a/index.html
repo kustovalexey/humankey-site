@@ -57,7 +57,7 @@
   var isAndroid = /android/i.test(navigator.userAgent);
   document.getElementById('open').href = isAndroid
     ? 'intent://activate?c=' + encodeURIComponent(c) +
-      '#Intent;scheme=humankey;package=tech.humankey.app;end'
+      '#Intent;scheme=humankey;end' // без package: откроет и RuStore-, и Google Play-версию (24.11)
     : deep;
 })();
 </script>
