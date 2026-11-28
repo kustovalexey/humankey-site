@@ -181,17 +181,19 @@
               c.cross.designSun + '/' + c.cross.designEarth) +
           '</div>' +
         '</div>' +
-        '<div class="card bodygraph">' + svg.replace(/^<\?xml[^>]*>\s*/, '') + '</div>' +
+        '<div class="card bodygraph"><div class="bg-stage">' +
+          '<img class="silhouette" src="data/silhouette.webp" alt="" width="1237" height="1400">' +
+          svg.replace(/^<\?xml[^>]*>\s*/, '') + '</div></div>' +
         '<div class="card centers">' +
           '<p><span>Определённые центры</span>' + esc(centersDef.join(', ') || '—') + '</p>' +
           '<p><span>Открытые центры</span>' + esc(centersOpen.join(', ') || '—') + '</p>' +
         '</div>' +
         '<div class="card text"><h2>Легенда карты</h2>' + prose(content.legend) + '</div>' +
-        '<div class="card text"><h2>Твой тип</h2>' + prose(t.you) + '</div>' +
+        '<div class="card text"><h2>Ваш тип</h2>' + prose(t.you) + '</div>' +
         // ТЗ 24.10: демо-воронка — платного здесь нет и не будет; за большим —
         // в полное приложение. Формулировка — по CTA калькулятора сайта.
         '<div class="card cta">' +
-          '<h2>Хочешь больше — скачай полное приложение HumanKey</h2>' +
+          '<h2>Хотите больше — скачайте полное приложение HumanKey</h2>' +
           '<p>Полный разбор — как принимать решения, профиль, центры, каналы и ворота ' +
           'с интерпретациями, крест — плюс карта дня и транзит — в приложении HumanKey.</p>' +
           '<a class="btn btn-primary" href="' + RUSTORE + '" target="_blank" rel="noopener noreferrer">Скачать в RuStore</a>' +

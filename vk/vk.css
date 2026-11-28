@@ -1,22 +1,24 @@
-/* HumanKey VK Mini App — та же палитра «глубокий космос», что сайт и приложение. */
+/* HumanKey VK Mini App — палитра Deep Cosmos, как в приложении 2.2 (28.11):
+   мягкое золото вместо прежнего оранжевого. */
 :root {
-  --bg: #0A0614;
-  --surface: #141022;
-  --surface-alt: #1B1630;
-  --text: #EBE7F4;
-  --text-muted: #A39BC0;
-  --text-dim: #6E668A;
-  --amber: #F59E0B;
-  --amber-light: #FDE68A;
-  --primary: #7C5CFF;
-  --border: rgba(245, 158, 11, 0.25);
+  --bg: #100E1E;
+  --surface: #1C192E;
+  --surface-alt: #26223D;
+  --surface-high: #34304F;
+  --text: #EEEAF4;
+  --text-muted: #9690B0;
+  --text-dim: #6E6890;
+  --amber: #E8B85C;
+  --amber-light: #F6D696;
+  --primary: #4F46E5;
+  --border: var(--surface-high);
 }
 
 * { box-sizing: border-box; }
 
 html, body {
   margin: 0;
-  background: radial-gradient(ellipse at top, #1E1B4B 0%, #0A0614 60%) fixed;
+  background: radial-gradient(ellipse at 30% 0%, #1E1B4B 0%, #100E1E 60%) fixed;
   background-color: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -32,7 +34,7 @@ html, body {
 }
 
 .top { display: flex; align-items: center; gap: 12px; padding: 8px 0 16px; }
-.logo { border-radius: 10px; }
+.logo { display: block; }
 .brand { font-weight: 700; font-size: 18px; }
 .tagline { color: var(--text-muted); font-size: 13px; }
 
@@ -71,7 +73,7 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 10px; }
   border-radius: 10px; overflow: hidden; margin-top: 4px;
 }
 .cities div { padding: 10px 12px; color: var(--text); cursor: pointer; }
-.cities div:hover, .cities div:active { background: rgba(245, 158, 11, 0.12); }
+.cities div:hover, .cities div:active { background: rgba(232, 184, 92, 0.12); }
 
 .btn {
   display: block; width: 100%; padding: 14px; border: 0; border-radius: 12px;
@@ -101,7 +103,18 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 10px; }
 .fact strong { font-weight: 600; }
 
 .bodygraph { padding: 8px; }
-.bodygraph svg { display: block; width: 100%; height: auto; }
+/* Как рейв-карта в приложении: силуэт fig1 = 0.80 стороны бодиграфа,
+   сдвиг 0.016 стороны вверх (rave_chart_view.dart), под ним мягкое свечение. */
+.bg-stage { position: relative; aspect-ratio: 1 / 1; }
+.bg-stage::before {
+  content: ''; position: absolute; inset: 12%;
+  background: radial-gradient(circle, rgba(232, 184, 92, 0.16) 0%, rgba(232, 184, 92, 0) 68%);
+}
+.bg-stage .silhouette {
+  position: absolute; top: 8.4%; left: 50%; height: 80%; width: auto;
+  transform: translateX(-50%); pointer-events: none;
+}
+.bodygraph svg { position: relative; display: block; width: 100%; height: auto; }
 
 .centers p { margin: 0 0 10px; }
 .centers span { display: block; color: var(--text-dim); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; }
@@ -110,5 +123,5 @@ h2 { font-size: 18px; font-weight: 600; margin: 0 0 10px; }
 .text p { margin: 0 0 12px; }
 .text p:last-child { margin-bottom: 0; }
 
-.cta { border-color: rgba(245, 158, 11, 0.6); background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(124, 92, 255, 0.12)); }
+.cta { border-color: rgba(232, 184, 92, 0.6); background: linear-gradient(135deg, rgba(232, 184, 92, 0.14), rgba(79, 70, 229, 0.12)); }
 .cta p { margin: 0 0 14px; }

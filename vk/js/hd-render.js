@@ -82,8 +82,10 @@
         fill = CENTER_COLOR[name]; op = DEFINED_OPACITY;
         style = `fill:${fill};fill-opacity:${op}`;
       } else {
-        fill = 'none'; op = '1'; stroke = '#9CA3AF'; sw = '2';
-        style = 'fill:none;stroke:#9CA3AF;stroke-width:2;stroke-opacity:0.6';
+        // Как в приложении с 23.11: на светящемся силуэте открытый центр —
+        // кремовый контур (серый терялся).
+        fill = 'none'; op = '1'; stroke = '#FFF4E2'; sw = '3';
+        style = 'fill:none;stroke:#FFF4E2;stroke-width:3;stroke-opacity:0.95';
       }
       const aliases = name === 'solar-plexus' ? ['solar-plexus', 'solar'] : [name];
       for (const alias of aliases) {
